@@ -1,0 +1,19 @@
+server {
+  listen ${PORT};
+  server_name  localhost;
+
+
+  location /api/ {
+    rewrite ^/api(/.*)$ $1 break;
+    proxy_pass ${API_URL};
+  }
+
+  location = /api {
+    rewrite ^/api$ / break;
+    proxy_pass ${API_URL};
+  }
+
+  location / {
+    proxy_pass ${UI_URL};
+  }
+}
