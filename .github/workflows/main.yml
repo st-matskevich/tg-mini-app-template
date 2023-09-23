@@ -1,0 +1,42 @@
+name: tg-mini-app-template-main-workflow
+on: [push, workflow_dispatch]
+
+jobs:
+  build-api:
+    runs-on: ubuntu-latest 
+    defaults:
+      run:
+        working-directory: ./api
+
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          working-directory: ./api
+
+      - name: Build
+        run: go build -v ./...
+
+  build-ui:
+    runs-on: ubuntu-latest 
+    defaults:
+      run:
+        working-directory: ./ui
+
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Set up React 
+        run: npm ci
+
+      - name: Build
+        run: npm run build
