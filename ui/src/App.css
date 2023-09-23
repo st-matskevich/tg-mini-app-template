@@ -32,7 +32,17 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.button {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 10px 25px;
+  background-color: #61dafb;
+  color: #282c34;
+  user-select: none;
 }
