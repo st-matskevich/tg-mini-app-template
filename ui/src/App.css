@@ -14,14 +14,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--tg-theme-bg-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--tg-theme-text-color);
 }
 
 .App-link {
@@ -42,7 +42,7 @@
   cursor: pointer;
   border-radius: 8px;
   padding: 10px 25px;
-  background-color: #61dafb;
-  color: #282c34;
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
   user-select: none;
 }
