@@ -12,18 +12,26 @@ services:
     build:
       context: ./api
 
-  # Guide UI service
+  # Guide UI in development mode
   guide-ui:
+    environment:
+      WATCHPACK_POLLING: true
     restart: on-failure
+    volumes:
+      - ./ui:/app
+      - /app/node_modules
     build:
       context: ./ui
+      dockerfile: dev.dockerfile
 
+  # Nginx proxy to forward request to UI and API
   dev-proxy:
     image: nginx:stable-alpine
     environment:
       PORT: 3000
       API_URL: http://guide-api:3000
       UI_URL: http://guide-ui:3000
+    restart: on-failure
     volumes:
       - ./proxy.template:/etc/nginx/templates/default.conf.template
 
@@ -32,6 +40,7 @@ services:
     image: ngrok/ngrok:alpine
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    restart: on-failure
     command: ["http", "--domain=${NGROK_DOMAIN}", "dev-proxy:3000", "--log=stdout"]
     
 
