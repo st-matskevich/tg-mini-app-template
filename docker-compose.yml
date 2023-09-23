@@ -2,8 +2,8 @@ version: "3.9"
 
 services:
 
-  # Guide API service
-  guide-api:
+  # Bot API service
+  bot-api:
     environment:
       CORS_ALLOWED_ORIGINS: "*"
       TELEGRAM_WEB_APP_URL: https://${NGROK_DOMAIN}
@@ -12,8 +12,8 @@ services:
     build:
       context: ./api
 
-  # Guide UI in development mode
-  guide-ui:
+  # Bot UI in development mode
+  bot-ui:
     environment:
       WATCHPACK_POLLING: true
     restart: on-failure
@@ -29,8 +29,8 @@ services:
     image: nginx:stable-alpine
     environment:
       PORT: 3000
-      API_URL: http://guide-api:3000
-      UI_URL: http://guide-ui:3000
+      API_URL: http://bot-api:3000
+      UI_URL: http://bot-ui:3000
     restart: on-failure
     volumes:
       - ./proxy.template:/etc/nginx/templates/default.conf.template

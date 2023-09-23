@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Welcome to Telegram Mini App Template Bot</p>
+        <p>Welcome to the Telegram Mini App Template Bot</p>
         <div className="button" onClick={onShowTelegramDialog}>Show Telegram Dialog</div>
       </header>
     </div>
