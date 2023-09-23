@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+
+  # Guide API service
+  api:
+    environment:
+      CORS_ALLOWED_ORIGINS: "*"
+      TELEGRAM_WEB_APP_URL: http://localhost:8100
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+    ports:
+      - 8000:3000
+    restart: on-failure
+    build:
+      context: ./api
+
+  # Guide UI service
+  ui:
+    ports:
+      - 8100:3000
+    restart: on-failure
+    build:
+      context: ./ui
+
+  # Ngrok service
+  ngrok:
+    image: ngrok/ngrok:alpine
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    command: ["http", "api:3000", "--log=stdout"]
+    
+
