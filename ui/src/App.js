@@ -3,6 +3,7 @@ import './App.css';
 
 function App() {
   const onShowTelegramDialog = () => {
+    // Example of interaction with telegram-web-app.js script to show a native alert
     window.Telegram.WebApp.showAlert("Message from Telegram Mini App Template Bot");
   };
 
