@@ -40,3 +40,46 @@ jobs:
 
       - name: Build
         run: npm run build
+  
+  deploy-ui:
+    needs: [build-api, build-ui]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      PROJECT_REGION: ${{ vars.GCP_PROJECT_REGION }}
+      ARTIFACT_REGISTRY: ${{ vars.GCP_ARTIFACT_REGISTRY }}
+      SERVICE_ACCOUNT: ${{ vars.GCP_SA_EMAIL }}
+      UI_SERVICE: ${{ vars.GCP_UI_SERVICE_NAME }}
+      UI_IMAGE: ${{ vars.GCP_PROJECT_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REGISTRY }}/${{ vars.GCP_UI_SERVICE_NAME }}:${{  github.sha }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ui
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Authenticate Cloud CLI
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Setup Cloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker  ${{ env.PROJECT_REGION }}-docker.pkg.dev
+
+      - name: Build and Push Container
+        run: |-
+          docker build -t ${{ env.UI_IMAGE }} . -f prod.dockerfile
+          docker push ${{ env.UI_IMAGE }}
+
+      - name: Deploy UI service to Cloud Run
+        run: |-
+          gcloud --quiet run deploy ${{ env.UI_SERVICE }} \
+          --image=${{ env.UI_IMAGE }} \
+          --region=${{ env.PROJECT_REGION }} \
+          --service-account=${{ env.SERVICE_ACCOUNT }} \
+          --allow-unauthenticated
