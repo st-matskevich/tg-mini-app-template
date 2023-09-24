@@ -1,5 +1,5 @@
 # Telegram Mini App Template
-Template for implementing Telegram Bots with Mini Apps. Deployed instance available at [@tg_mini_app_template_bot](https://t.me/tg_mini_app_template_bot).
+Template for building Telegram Bots with Mini Apps in React and Go. Deployed instance available at [@tg_mini_app_template_bot](https://t.me/tg_mini_app_template_bot).
 
 ## Features
 - Example of creating [Inline Keyboard](https://core.telegram.org/bots/features#inline-keyboards) to interact with the user. Keyboard creation can be found in [main.go](api/main.go)
