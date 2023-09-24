@@ -50,6 +50,7 @@ jobs:
       ARTIFACT_REGISTRY: ${{ vars.GCP_ARTIFACT_REGISTRY }}
       SERVICE_ACCOUNT: ${{ vars.GCP_SA_EMAIL }}
       UI_SERVICE: ${{ vars.GCP_UI_SERVICE_NAME }}
+      UI_MAX_INSTANCES: ${{ vars.GCP_UI_SERVICE_MAX_INSTANCES }}
       UI_IMAGE: ${{ vars.GCP_PROJECT_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REGISTRY }}/${{ vars.GCP_UI_SERVICE_NAME }}:${{  github.sha }}
     runs-on: ubuntu-latest
     defaults:
@@ -82,6 +83,7 @@ jobs:
           --image=${{ env.UI_IMAGE }} \
           --region=${{ env.PROJECT_REGION }} \
           --service-account=${{ env.SERVICE_ACCOUNT }} \
+          --max-instances=${{ env.UI_MAX_INSTANCES }} \
           --allow-unauthenticated
 
   deploy-api:
@@ -94,6 +96,7 @@ jobs:
       SERVICE_ACCOUNT: ${{ vars.GCP_SA_EMAIL }}
       UI_SERVICE: ${{ vars.GCP_UI_SERVICE_NAME }}
       API_SERVICE: ${{ vars.GCP_API_SERVICE_NAME }}
+      API_MAX_INSTANCES: ${{ vars.GCP_API_SERVICE_MAX_INSTANCES }}
       API_IMAGE: ${{ vars.GCP_PROJECT_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REGISTRY }}/${{ vars.GCP_API_SERVICE_NAME }}:${{  github.sha }}
       TG_TOKEN_SECRET: ${{ vars.GCP_TG_TOKEN_SECRET }}
     runs-on: ubuntu-latest
@@ -130,6 +133,7 @@ jobs:
           --image=${{ env.API_IMAGE }} \
           --region=${{ env.PROJECT_REGION }} \
           --service-account=${{ env.SERVICE_ACCOUNT }} \
+          --max-instances=${{ env.API_MAX_INSTANCES }} \
           --set-env-vars=TELEGRAM_WEB_APP_URL=${{ env.UI_URL }} \
           --set-secrets=TELEGRAM_BOT_TOKEN=${{ env.TG_TOKEN_SECRET }}:latest \
           --allow-unauthenticated

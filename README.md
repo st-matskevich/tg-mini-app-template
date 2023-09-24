@@ -25,7 +25,9 @@ Deployment setup:
 0. Copy the secret name and save it to `GCP_TG_TOKEN_SECRET` GitHub variable
 0. Define the following GitHub variables:
    - `GCP_UI_SERVICE_NAME` with the desired name of UI Cloud Run instance 
+   - `GCP_UI_SERVICE_MAX_INSTANCES` with the number of UI service instances
    - `GCP_API_SERVICE_NAME` with the desired name of API Cloud Run instance 
+   - `GCP_API_SERVICE_MAX_INSTANCES` with the number of API service instances   
 
 After successful deployment, obtain API service URL from either `deploy-api` job results or from [GCP Project Console](https://console.cloud.google.com) and proceed to [switching bot environment](#switching-bot-environment).
 
