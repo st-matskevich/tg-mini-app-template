@@ -69,7 +69,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
 
       - name: Authorize Docker push
-        run: gcloud auth configure-docker  ${{ env.PROJECT_REGION }}-docker.pkg.dev
+        run: gcloud auth configure-docker ${{ env.PROJECT_REGION }}-docker.pkg.dev
 
       - name: Build and Push Container
         run: |-
@@ -82,4 +82,54 @@ jobs:
           --image=${{ env.UI_IMAGE }} \
           --region=${{ env.PROJECT_REGION }} \
           --service-account=${{ env.SERVICE_ACCOUNT }} \
+          --allow-unauthenticated
+
+  deploy-api:
+    needs: [deploy-ui]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      PROJECT_REGION: ${{ vars.GCP_PROJECT_REGION }}
+      ARTIFACT_REGISTRY: ${{ vars.GCP_ARTIFACT_REGISTRY }}
+      SERVICE_ACCOUNT: ${{ vars.GCP_SA_EMAIL }}
+      UI_SERVICE: ${{ vars.GCP_UI_SERVICE_NAME }}
+      API_SERVICE: ${{ vars.GCP_API_SERVICE_NAME }}
+      API_IMAGE: ${{ vars.GCP_PROJECT_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REGISTRY }}/${{ vars.GCP_API_SERVICE_NAME }}:${{  github.sha }}
+      TG_TOKEN_SECRET: ${{ vars.GCP_TG_TOKEN_SECRET }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Authenticate Cloud CLI
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Setup Cloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker ${{ env.PROJECT_REGION }}-docker.pkg.dev
+
+      - name: Build and Push Container
+        run: |-
+          docker build -t ${{ env.API_IMAGE }} .
+          docker push ${{ env.API_IMAGE }}
+
+      - name: Get UI service URL
+        run: echo "UI_URL=$(gcloud --quiet run services describe ${{ env.UI_SERVICE }} --platform managed --region ${{ env.PROJECT_REGION }} --format 'value(status.url)')" >> $GITHUB_ENV
+      
+      - name: Deploy API service to Cloud Run
+        run: |-
+          gcloud --quiet run deploy ${{ env.API_SERVICE }} \
+          --image=${{ env.API_IMAGE }} \
+          --region=${{ env.PROJECT_REGION }} \
+          --service-account=${{ env.SERVICE_ACCOUNT }} \
+          --set-env-vars=TELEGRAM_WEB_APP_URL=${{ env.UI_URL }} \
+          --set-secrets=TELEGRAM_BOT_TOKEN=${{ env.TG_TOKEN_SECRET }}:latest \
           --allow-unauthenticated
