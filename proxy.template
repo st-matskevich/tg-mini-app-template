@@ -2,18 +2,23 @@ server {
   listen ${PORT};
   server_name  localhost;
 
+  # This is required for dynamic containers
+  # Otherwise nginx will use IPs from DNS cache
+  resolver 127.0.0.11 valid=1s;
+  set $api_url ${API_URL};
+  set $ui_url ${UI_URL};
 
   location /api/ {
     rewrite ^/api(/.*)$ $1 break;
-    proxy_pass ${API_URL};
+    proxy_pass $api_url;
   }
 
   location = /api {
     rewrite ^/api$ / break;
-    proxy_pass ${API_URL};
+    proxy_pass $api_url;
   }
 
   location / {
-    proxy_pass ${UI_URL};
+    proxy_pass $ui_url;
   }
 }
