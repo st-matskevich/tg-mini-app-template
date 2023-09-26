@@ -19,7 +19,7 @@ services:
     restart: on-failure
     volumes:
       - ./ui:/app
-      - /app/node_modules
+      - tg-bot-ui:/app/node_modules
     build:
       context: ./ui
       dockerfile: dev.dockerfile
@@ -43,4 +43,5 @@ services:
     restart: on-failure
     command: ["http", "--domain=${NGROK_DOMAIN}", "dev-proxy:3000", "--log=stdout"]
     
-
+volumes:
+  tg-bot-ui:
