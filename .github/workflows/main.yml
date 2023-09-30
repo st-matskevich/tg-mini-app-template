@@ -49,9 +49,9 @@ jobs:
       PROJECT_REGION: ${{ vars.GCP_PROJECT_REGION }}
       ARTIFACT_REGISTRY: ${{ vars.GCP_ARTIFACT_REGISTRY }}
       SERVICE_ACCOUNT: ${{ vars.GCP_SA_EMAIL }}
-      UI_SERVICE: ${{ vars.GCP_UI_SERVICE_NAME }}
-      UI_MAX_INSTANCES: ${{ vars.GCP_UI_SERVICE_MAX_INSTANCES }}
-      UI_IMAGE: ${{ vars.GCP_PROJECT_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REGISTRY }}/${{ vars.GCP_UI_SERVICE_NAME }}:${{  github.sha }}
+      UI_SERVICE: ${{ vars.GCP_SERVICE_UI_NAME }}
+      UI_MAX_INSTANCES: ${{ vars.GCP_SERVICE_UI_MAX_INSTANCES }}
+      UI_IMAGE: ${{ vars.GCP_PROJECT_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REGISTRY }}/${{ vars.GCP_SERVICE_UI_NAME }}:${{  github.sha }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -94,11 +94,11 @@ jobs:
       PROJECT_REGION: ${{ vars.GCP_PROJECT_REGION }}
       ARTIFACT_REGISTRY: ${{ vars.GCP_ARTIFACT_REGISTRY }}
       SERVICE_ACCOUNT: ${{ vars.GCP_SA_EMAIL }}
-      UI_SERVICE: ${{ vars.GCP_UI_SERVICE_NAME }}
-      API_SERVICE: ${{ vars.GCP_API_SERVICE_NAME }}
-      API_MAX_INSTANCES: ${{ vars.GCP_API_SERVICE_MAX_INSTANCES }}
-      API_IMAGE: ${{ vars.GCP_PROJECT_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REGISTRY }}/${{ vars.GCP_API_SERVICE_NAME }}:${{  github.sha }}
-      TG_TOKEN_SECRET: ${{ vars.GCP_TG_TOKEN_SECRET }}
+      UI_SERVICE: ${{ vars.GCP_SERVICE_UI_NAME }}
+      API_SERVICE: ${{ vars.GCP_SERVICE_API_NAME }}
+      API_MAX_INSTANCES: ${{ vars.GCP_SERVICE_API_MAX_INSTANCES }}
+      API_IMAGE: ${{ vars.GCP_PROJECT_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REGISTRY }}/${{ vars.GCP_SERVICE_API_NAME }}:${{  github.sha }}
+      TG_TOKEN_SECRET: ${{ vars.GCP_SECRET_TG_TOKEN }}
     runs-on: ubuntu-latest
     defaults:
       run:

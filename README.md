@@ -9,7 +9,7 @@ Template for building Telegram Bots with Mini Apps in React and Go. Deployed ins
 - [Continious deliviery](#production-deployment) to [Google Cloud Platform](https://cloud.google.com/)
 
 ## Setup prerequisites
-Telegram Bot token is required to interact with [Telegram Bot API](https://core.telegram.org/bots). To get one, сreate a bot using [@BotFather](https://t.me/botfather).
+[Telegram Bot](https://core.telegram.org/bots) token is required to interact with [Telegram Bot API](https://core.telegram.org/bots/api). To get one, сreate a bot using [@BotFather](https://t.me/botfather) or follow [Telegram instructions](https://core.telegram.org/bots#how-do-i-create-a-bot).
 
 ## Local environment
 This repository provides an easy-to-use local development environment. Using it you can start writing your bot business logic without spending time on the environment.
@@ -58,12 +58,12 @@ Deployment setup:
 0. Create [Artifact Registry for Docker images](https://cloud.google.com/artifact-registry/docs/docker/store-docker-container-images#create) in `GCP_PROJECT_REGION` region
 0. Copy Artifact Registry name and save it to `GCP_ARTIFACT_REGISTRY` GitHub variable
 0. [Create a secret](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#create) with [Telegram Bot token](#setup-prerequisites) in Secret Manager
-0. Copy the secret name and save it to `GCP_TG_TOKEN_SECRET` GitHub variable
+0. Copy the secret name and save it to `GCP_SECRET_TG_TOKEN` GitHub variable
 0. Define the following GitHub variables:
-   - `GCP_UI_SERVICE_NAME` with the desired name of UI Cloud Run instance 
-   - `GCP_UI_SERVICE_MAX_INSTANCES` with the desired maximum number of UI service instances
-   - `GCP_API_SERVICE_NAME` with the desired name of API Cloud Run instance 
-   - `GCP_API_SERVICE_MAX_INSTANCES` with the desired maximum number of API service instances   
+   - `GCP_SERVICE_UI_NAME` with the desired name of UI Cloud Run instance 
+   - `GCP_SERVICE_UI_MAX_INSTANCES` with the desired maximum number of UI service instances
+   - `GCP_SERVICE_API_NAME` with the desired name of API Cloud Run instance 
+   - `GCP_SERVICE_API_MAX_INSTANCES` with the desired maximum number of API service instances   
 
 After successful deployment, obtain the bot API URL from either `deploy-api` job results or from [GCP Project Console](https://console.cloud.google.com) and proceed to [switching bot environment](#switching-bot-environment).
 
