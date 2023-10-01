@@ -18,8 +18,8 @@ services:
       WDS_SOCKET_PORT: 443
     restart: on-failure
     volumes:
-      - ./ui:/app
-      - tg-bot-ui:/app/node_modules
+      - ./ui/src:/app/src
+      - ./ui/public:/app/public
     build:
       context: ./ui
       dockerfile: dev.dockerfile
@@ -42,6 +42,3 @@ services:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
     restart: on-failure
     command: ["http", "--domain=${NGROK_DOMAIN}", "dev-proxy:3000", "--log=stdout"]
-    
-volumes:
-  tg-bot-ui:
