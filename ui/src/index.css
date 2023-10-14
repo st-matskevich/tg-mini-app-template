@@ -1,13 +1,49 @@
-body {
-  margin: 0;
+/* Example of adjusting UI styles to the user's current color theme using ThemeParams */
+:root {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+
+  color: var(--tg-theme-text-color);
+  background-color: var(--tg-theme-bg-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Example of adjusting UI styles to the user's current color theme using ThemeParams */
+button {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 10px 25px;
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  user-select: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
 }

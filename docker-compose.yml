@@ -13,13 +13,12 @@ services:
 
   # Bot UI in development mode
   bot-ui:
-    environment:
-      WATCHPACK_POLLING: true
-      WDS_SOCKET_PORT: 443
     restart: on-failure
     volumes:
       - ./ui/src:/app/src
       - ./ui/public:/app/public
+      - ./ui/index.html:/app/index.html
+      - ./ui/vite.config.js:/app/vite.config.js
     build:
       context: ./ui
       dockerfile: dev.dockerfile

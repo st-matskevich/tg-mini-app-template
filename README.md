@@ -3,8 +3,8 @@ Template for building Telegram Bots with Mini Apps in React and Go. Deployed ins
 
 ## Features
 - Example of creating [Inline Keyboard](https://core.telegram.org/bots/features#inline-keyboards) to interact with the user. Keyboard creation can be found in [main.go](api/main.go)
-- Example of adjusting UI styles to the user's current color theme using [ThemeParams](https://core.telegram.org/bots/webapps#themeparams). CSS variable usage can be found in [App.css](ui/src/App.css)
-- Example of interaction with [telegram-web-app.js](https://core.telegram.org/bots/webapps#initializing-mini-apps) to show a native alert. Script usage can be found in [App.js](ui/src/App.js) 
+- Example of adjusting UI styles to the user's current color theme using [ThemeParams](https://core.telegram.org/bots/webapps#themeparams). CSS variable usage can be found in [index.css](ui/src/index.css)
+- Example of interaction with [telegram-web-app.js](https://core.telegram.org/bots/webapps#initializing-mini-apps) to show a native alert. Script usage can be found in [App.jsx](ui/src/App.jsx) 
 - [Local environment](#local-environment) with [docker-compose](https://docs.docker.com/compose/), that serves traffic over HTTPS proxy and automatically applies UI changes without rebuilding the container
 - [Continious deliviery](#production-deployment) to [Google Cloud Platform](https://cloud.google.com/)
 
@@ -90,6 +90,7 @@ curl https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebhook?url=${BOT_API_
 - [Docker](https://www.docker.com/)
 - [Go](https://go.dev/)
 - [React](https://react.dev/)
+- [Vite](https://vitejs.dev)
 - [gotgbot](https://github.com/PaulSonOfLars/gotgbot)
 - [nginx](https://www.nginx.com/)
 - [ngrok](https://ngrok.com/)

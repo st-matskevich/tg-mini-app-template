@@ -1,49 +1,35 @@
-.App {
-  text-align: center;
+.logo {
+  height: 5em;
+  padding: 1em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+.logo.telegram:hover {
+  filter: drop-shadow(0 0 2em #a9adfdaa);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-/* Example of adjusting UI styles to the user's current color theme using ThemeParams */
-.App-header {
-  background-color: var(--tg-theme-bg-color);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--tg-theme-text-color);
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
 }
 
-.button {
-  cursor: pointer;
-  border-radius: 8px;
-  padding: 10px 25px;
-  background-color: var(--tg-theme-button-color);
-  color: var(--tg-theme-button-text-color);
-  user-select: none;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Example of adjusting UI styles to the user's current color theme using ThemeParams */
+.read-the-docs {
+  color: var(--tg-theme-hint-color);
 }
